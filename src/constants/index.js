@@ -19,9 +19,9 @@ import {
   amdocs,
   aaic,
   freelancer,
-  carrent,
-  jobit,
-  tripguide,
+  amnExchange,
+  marxeed,
+  docuphase,
   threejs,
 } from "../assets";
 
@@ -195,66 +195,66 @@ const testimonials = [
 
 const projects = [
   {
-    name: "Car Rent",
+    name: "AMNEXCHANGE",
     description:
-      "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
+      "Web-based platform that allows users to send crypto across the world.",
     tags: [
       {
         name: "react",
         color: "blue-text-gradient",
       },
       {
-        name: "mongodb",
+        name: "solidity",
         color: "green-text-gradient",
       },
       {
-        name: "tailwind",
+        name: "blockchain",
         color: "pink-text-gradient",
       },
     ],
-    image: carrent,
-    source_code_link: "https://github.com/",
+    image: amnExchange,
+    source_code_link: "https://amnexchange.netlify.app/",
   },
   {
-    name: "Job IT",
+    name: "marXeed",
     description:
-      "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
+      "Marxeed is an A.I. content creation assistant that drafts your blogs in seconds.",
     tags: [
       {
-        name: "react",
+        name: "redux",
         color: "blue-text-gradient",
       },
       {
-        name: "restapi",
+        name: "micro-frontend",
         color: "green-text-gradient",
       },
       {
-        name: "scss",
+        name: "ai",
         color: "pink-text-gradient",
       },
     ],
-    image: jobit,
-    source_code_link: "https://github.com/",
+    image: marxeed,
+    source_code_link: "https://marxeed.com/",
   },
   {
-    name: "Trip Guide",
+    name: "DocuPhase",
     description:
-      "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
+      "Intelligent Automation Solutions Built for Modern Finance Teams.",
     tags: [
       {
-        name: "nextjs",
+        name: "react-js",
         color: "blue-text-gradient",
       },
       {
-        name: "supabase",
+        name: "typescript",
         color: "green-text-gradient",
       },
       {
-        name: "css",
+        name: "aws",
         color: "pink-text-gradient",
       },
     ],
-    image: tripguide,
+    image: docuphase,
     source_code_link: "https://github.com/",
   },
 ];

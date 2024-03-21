@@ -26,9 +26,9 @@ import freelancer from "./company/freelancer.png";
 import amdocs from "./company/amdocs.png";
 import aaic from "./company/aaic.png";
 
-import carrent from "./carrent.png";
-import jobit from "./jobit.png";
-import tripguide from "./tripguide.png";
+import amnExchange from "./amnExchange.png";
+import marxeed from "./marxeed.png";
+import docuphase from "./docuphase.png";
 
 export {
   logo,
@@ -56,7 +56,7 @@ export {
   freelancer,
   amdocs,
   aaic,
-  carrent,
-  jobit,
-  tripguide,
+  amnExchange,
+  marxeed,
+  docuphase,
 };
