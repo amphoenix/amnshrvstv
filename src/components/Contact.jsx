@@ -81,13 +81,16 @@ const Contact = () => {
             email: "",
             message: "",
           });
-        },
-        (error) => {
-          setLoading(false);
-          console.error(error);
-          alert("Ahh, something went wrong. Please try again.");
-        }
-      );
+        })
+      .catch(error => {
+        setLoading(false);
+        setForm({
+          name: "",
+          email: "",
+          message: "",
+        });
+        alert("Ahh, something went wrong. Please try again.");
+      });
   };
 
   return (
