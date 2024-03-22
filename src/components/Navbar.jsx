@@ -60,7 +60,7 @@ const Navbar = () => {
                     } hover:text-white text-[18px] font-medium cursor-pointer`}
                 >
                   <a
-                    href="/public/Aman's Resume.pdf"
+                    href="/public/aman_resume.pdf"
                     download
                   >
                     {nav.title}
@@ -108,7 +108,7 @@ const Navbar = () => {
                       }}
                     >
                       <a
-                        href="/public/Aman's Resume.pdf"
+                        href="/public/aman_resume.pdf"
                         download
                       >
                         {nav.title}
