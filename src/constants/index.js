@@ -126,7 +126,9 @@ const experiences = [
     iconBg: "#383E56",
     date: "March 2022 - Present",
     points: [
-      "Devised and implemented a micro-frontend architecture for a product, which is now adopted globally by numerous companies, recognized for its superior adaptability and performance.",
+
+      "Designed and deployed a widely used micro-frontend architecture, renowned for adaptability and performance, across global telecom companies.",
+      "Seamlessly integratedOpenAI API and AI solutions into existing products and services, optimizing functionality and enhancing user experience.",
       "Designed & developed scalable backend systems using Node & Express, leveraging Redis for caching, data retrieval speed by 40%.",
       "Implemented dynamic Redux store partitioning strategies to optimize performance and scalability in large-scale React applications.",
       "Led and mentored a team of junior professionals by actively contributing to the execution of task and resolving roadblocks faced by them.",
