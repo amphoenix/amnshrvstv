@@ -23,6 +23,7 @@ import {
   marxeed,
   docuphase,
   threejs,
+  ai900
 } from "../assets";
 
 export const navLinks = [
@@ -49,10 +50,10 @@ const services = [
     title: "Web Developer",
     icon: web,
   },
-  // {
-  //   title: "React Native Developer",
-  //   icon: mobile,
-  // },
+  {
+    title: "AI/ML Engineer",
+    icon: mobile,
+  },
   {
     title: "Backend Developer",
     icon: backend,
@@ -265,4 +266,12 @@ const projects = [
   },
 ];
 
-export { services, technologies, experiences, testimonials, projects };
+const certifications = [
+  {
+    title: "Microsoft Certified: Azure AI Fundamentals",
+    icon: ai900,
+    url: "https://learn.microsoft.com/en-us/users/kumaraman-6661/transcript?wt.mc_id=certnurture_eml14_email_wwl"
+  },
+];
+
+export { services, technologies, experiences, testimonials, projects, certifications };

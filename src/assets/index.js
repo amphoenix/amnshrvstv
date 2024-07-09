@@ -30,6 +30,8 @@ import amnExchange from "./amnExchange.png";
 import marxeed from "./marxeed.png";
 import docuphase from "./docuphase.png";
 
+import ai900 from './certifications/ai900.webp'
+
 export {
   logo,
   backend,
@@ -59,4 +61,5 @@ export {
   amnExchange,
   marxeed,
   docuphase,
+  ai900
 };

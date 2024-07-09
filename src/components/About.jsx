@@ -3,7 +3,7 @@ import Tilt from "react-tilt";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
-import { services } from "../constants";
+import { certifications, services } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 
@@ -32,6 +32,32 @@ const ServiceCard = ({ index, title, icon }) => (
         </h3>
       </div>
     </motion.div>
+  </Tilt>
+);
+
+const CertificationCard = ({ index, title, icon, url }) => (
+  <Tilt className='xs:w-[250px] w-full'>
+    <a href={url} target="_blank" rel="noopener noreferrer">
+      <motion.div
+        variants={fadeIn("up", "easeOutCubic", index * 0.4, 0.5)}
+        className='w-full purple-gradient p-[2px] rounded-[25px] shadow-md'
+      >
+        <div
+          options={{
+            max: 35, 
+            scale: 1.02,
+            speed: 400,
+          }}
+          className='bg-dark rounded-[25px] py-6 px-10 min-h-[300px] flex justify-evenly items-center flex-col'
+        >
+          <img
+            src={icon}
+            alt={title}
+            className='w-18 h-18 object-contain'
+          />
+        </div>
+      </motion.div>
+    </a>
   </Tilt>
 );
 
@@ -75,7 +101,7 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
       >
-        Seasoned Full Stack Web Developer having <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{experience} years</span> of 
+        Seasoned Full Stack Web Developer having <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{experience} years</span> of
         experience in translating designs to code using React.js with TypeScript,
         JavaScript, Redux, HTML5, SASS, CSS3. Skilled in backend development using Node.js,
         Express.js, and database like MongoDB & PostgreSQL. Experienced in modern workflow tools,
@@ -84,6 +110,12 @@ const About = () => {
         create efficient, scalable, and user-friendly solutions that solve
         real-world problems. Let's work together to bring your ideas to life!
       </motion.p>
+
+      <div className='mt-20 flex flex-wrap gap-10'>
+        {certifications.map((certification, index) => (
+          <CertificationCard key={certification.title} index={index} {...certification} />
+        ))}
+      </div>
 
       <div className='mt-20 flex flex-wrap gap-10'>
         {services.map((service, index) => (
