@@ -271,7 +271,7 @@ const certifications = [
   {
     title: "Microsoft Certified: Azure AI Fundamentals",
     icon: ai900,
-    url: "https://learn.microsoft.com/en-us/users/kumaraman-6661/transcript?wt.mc_id=certnurture_eml14_email_wwl"
+    url: "https://learn.microsoft.com/en-us/users/kumaraman-6661/transcript/v0gm1f3exo8z94r?wt.mc_id=certnurture_eml14_email_wwl"
   },
   {
     title: "Microsoft Certified: Azure Fundamentals",
