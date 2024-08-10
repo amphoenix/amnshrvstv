@@ -30,7 +30,10 @@ import amnExchange from "./amnExchange.png";
 import marxeed from "./marxeed.png";
 import docuphase from "./docuphase.png";
 
-import ai900 from './certifications/ai900.webp'
+import ai900 from './certifications/ai900.webp';
+import az900 from './certifications/az900.png';
+
+import matan from './testimonals/matan.jfif';
 
 export {
   logo,
@@ -61,5 +64,7 @@ export {
   amnExchange,
   marxeed,
   docuphase,
-  ai900
+  ai900,
+  az900,
+  matan
 };

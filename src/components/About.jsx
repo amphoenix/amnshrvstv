@@ -44,7 +44,7 @@ const CertificationCard = ({ index, title, icon, url }) => (
       >
         <div
           options={{
-            max: 35, 
+            max: 35,
             scale: 1.02,
             speed: 400,
           }}
@@ -101,17 +101,13 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
       >
-        Seasoned Full Stack Web Developer having <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{experience} years</span> of
-        experience in translating designs to code using React.js with TypeScript,
-        JavaScript, Redux, HTML5, SASS, CSS3. Skilled in backend development using Node.js,
-        Express.js, and database like MongoDB & PostgreSQL. Experienced in modern workflow tools,
-        module bundling via Webpack and version control via Git/Perforce.<br />
-        I'm a quick learner and collaborate closely with clients to
-        create efficient, scalable, and user-friendly solutions that solve
-        real-world problems. Let's work together to bring your ideas to life!
+        Versatile Full Stack Web Developer with <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{experience} years</span> of
+        experience in building high-performance web applications using React.js, TypeScript, JavaScript, Redux, Node.js, Express.js,
+        MongoDB, andPostgreSQL. Adept at integrating AI/ML frameworks and cloud services to drive innovation. Award-winning performer
+        known for exceptional technical skills and leadership.
       </motion.p>
 
-      <div className='mt-20 flex flex-wrap gap-10'>
+      <div className='flex flex-wrap gap-10'>
         {certifications.map((certification, index) => (
           <CertificationCard key={certification.title} index={index} {...certification} />
         ))}
