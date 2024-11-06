@@ -53,6 +53,7 @@ const CertificationCard = ({ index, title, icon, url }) => (
           <img
             src={icon}
             alt={title}
+            style={{ height: icon === certifications?.[0]?.icon ? '150px' : 'auto' }}
             className='w-18 h-18 object-contain'
           />
         </div>
