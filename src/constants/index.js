@@ -129,12 +129,11 @@ const experiences = [
     iconBg: "#383E56",
     date: "March 2022 - Present",
     points: [
-
-      "Architected and deployed a micro - frontend system, leading to a 35 % reduction in page load times and improved scalability for global telecom clients.",
-      "Integrated AI-driven features with the OpenAI API, enhancing product functionality and user engagement by 25%.",
-      "Developed and optimized payment service using Node.js and Express.js, with Redis caching, resulting in a 40% improvement in data retrieval speeds.",
-      "Implemented dynamic Redux store partitioning strategies to optimize performance and scalability in large-scale React applications.",
-      "Led and mentored a team of junior professionals by actively contributing to the execution of task and resolving roadblocks faced by them.",
+      "Led a successful POC that secured client investment for Amdocs; now serving as UI Lead for the awarded project.",
+      "Engineered an OSS product using micro-frontend architecture, driving a 35% improvement in page load times and earning global adoption by leading telecom companies.",
+      "Developed and implemented REST APIs using Java and Spring Boot for robust, scalable backend services.",
+      "Integrated AI - driven features with the OpenAI API, enhancing product functionality and user engagement by 25%.",
+      "Led a team of 10 developers, ensuring adherence to best practices and code quality.",
       "Achievements: Received Recognition Award and Employee of the Month for innovative solutions and leadership."
     ],
   },
