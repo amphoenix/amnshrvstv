@@ -25,7 +25,7 @@ const SocialLink = ({ href, icon: Icon }) => (
 const Footer = () => {
     const year = new Date().getFullYear();
     const socialLinks = [
-        { href: 'https://www.linkedin.com/in/k-aman/', icon: LinkedInIcon },
+        { href: 'https://www.linkedin.com/in/amnshrvstv/', icon: LinkedInIcon },
         { href: 'https://github.com/amphoenix', icon: GithubIcon },
         { href: 'https://www.instagram.com/amnshrvstv', icon: IgIcon },
     ];
