@@ -1,16 +1,16 @@
-import React from "react";
-import Tilt from "react-tilt";
-import { motion } from "framer-motion";
+import React from 'react';
+import Tilt from 'react-tilt';
+import { motion } from 'framer-motion';
 
-import { styles } from "../styles";
-import { certifications, services } from "../constants";
-import { SectionWrapper } from "../hoc";
-import { fadeIn, textVariant } from "../utils/motion";
+import { styles } from '../styles';
+import { certifications, services } from '../constants';
+import { SectionWrapper } from '../hoc';
+import { fadeIn, textVariant } from '../utils/motion';
 
 const ServiceCard = ({ index, title, icon }) => (
   <Tilt className='xs:w-[250px] w-full'>
     <motion.div
-      variants={fadeIn("right", "spring", index * 0.5, 0.75)}
+      variants={fadeIn('right', 'spring', index * 0.5, 0.75)}
       className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
     >
       <div
@@ -37,9 +37,9 @@ const ServiceCard = ({ index, title, icon }) => (
 
 const CertificationCard = ({ index, title, icon, url }) => (
   <Tilt className='xs:w-[250px] w-full'>
-    <a href={url} target="_blank" rel="noopener noreferrer">
+    <a href={url} target='_blank' rel='noopener noreferrer'>
       <motion.div
-        variants={fadeIn("up", "easeOutCubic", index * 0.4, 0.5)}
+        variants={fadeIn('up', 'easeOutCubic', index * 0.4, 0.5)}
         className='w-full purple-gradient p-[2px] rounded-[25px] shadow-md'
       >
         <div
@@ -53,7 +53,7 @@ const CertificationCard = ({ index, title, icon, url }) => (
           <img
             src={icon}
             alt={title}
-            style={{ height: icon === certifications?.[0]?.icon ? '150px' : 'auto' }}
+            style={{ height: '150px' }}
             className='w-18 h-18 object-contain'
           />
         </div>
@@ -86,7 +86,7 @@ const calculateExperience = (startYear, startMonth, startDay, gapYears = 0) => {
 
   const experience = years + months / 100; // divide by 100 instead of 12
   return experience.toFixed(2);
-}
+};
 
 const About = () => {
   const experience = calculateExperience(2018, 12, 28, 1); // replace with your start year, month, day, and gap years
@@ -99,18 +99,27 @@ const About = () => {
       </motion.div>
 
       <motion.p
-        variants={fadeIn("", "", 0.1, 1)}
+        variants={fadeIn('', '', 0.1, 1)}
         className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
       >
-        Versatile Full Stack Web Developer with <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{experience} years</span> of
-        experience in building high-performance web applications using React.js, TypeScript, JavaScript, Redux, Node.js, Express.js,
-        MongoDB, andPostgreSQL. Adept at integrating AI/ML frameworks and cloud services to drive innovation. Award-winning performer
-        known for exceptional technical skills and leadership.
+        Versatile Full Stack Web Developer with{' '}
+        <span style={{ fontSize: '20px', fontWeight: 'bold' }}>
+          {experience} years
+        </span>{' '}
+        of experience in building high-performance web applications using
+        React.js, TypeScript, JavaScript, Redux, Node.js, Express.js, MongoDB,
+        andPostgreSQL. Adept at integrating AI/ML frameworks and cloud services
+        to drive innovation. Award-winning performer known for exceptional
+        technical skills and leadership.
       </motion.p>
 
       <div className='flex flex-wrap gap-10'>
         {certifications.map((certification, index) => (
-          <CertificationCard key={certification.title} index={index} {...certification} />
+          <CertificationCard
+            key={certification.title}
+            index={index}
+            {...certification}
+          />
         ))}
       </div>
 
@@ -123,4 +132,4 @@ const About = () => {
   );
 };
 
-export default SectionWrapper(About, "about");
+export default SectionWrapper(About, 'about');

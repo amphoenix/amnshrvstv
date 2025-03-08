@@ -25,150 +25,162 @@ import {
   threejs,
   ai900,
   az900,
-  matan
-} from "../assets";
+  matan,
+  flipkart,
+  java,
+} from '../assets';
 
 export const navLinks = [
   {
-    id: "resume",
-    title: "Resume",
+    id: 'resume',
+    title: 'Resume',
   },
   {
-    id: "about",
-    title: "About",
+    id: 'about',
+    title: 'About',
   },
   {
-    id: "work",
-    title: "Work",
+    id: 'work',
+    title: 'Work',
   },
   {
-    id: "contact",
-    title: "Contact",
+    id: 'contact',
+    title: 'Contact',
   },
 ];
 
 const services = [
   {
-    title: "Web Developer",
+    title: 'Frontend Developer',
     icon: web,
   },
   {
-    title: "AI/ML Engineer",
-    icon: mobile,
-  },
-  {
-    title: "Backend Developer",
+    title: 'Backend Developer',
     icon: backend,
   },
   {
-    title: "Blockchain Developer",
+    title: 'AI/ML Engineer',
+    icon: mobile,
+  },
+  {
+    title: 'Blockchain Developer',
     icon: creator,
   },
 ];
 
 const technologies = [
   {
-    name: "HTML 5",
+    name: 'HTML 5',
     icon: html,
   },
   {
-    name: "CSS 3",
+    name: 'CSS 3',
     icon: css,
   },
   {
-    name: "JavaScript",
+    name: 'JavaScript',
     icon: javascript,
   },
   {
-    name: "TypeScript",
+    name: 'TypeScript',
     icon: typescript,
   },
   {
-    name: "React JS",
+    name: 'React JS',
     icon: reactjs,
   },
   {
-    name: "Redux Toolkit",
+    name: 'Redux Toolkit',
     icon: redux,
   },
   {
-    name: "Tailwind CSS",
+    name: 'Tailwind CSS',
     icon: tailwind,
   },
   {
-    name: "Node JS",
+    name: 'Node JS',
     icon: nodejs,
   },
   {
-    name: "MongoDB",
+    name: 'MongoDB',
     icon: mongodb,
   },
   {
-    name: "Three JS",
+    name: 'Three JS',
     icon: threejs,
   },
   {
-    name: "git",
+    name: 'git',
     icon: git,
   },
   {
-    name: "figma",
-    icon: figma,
+    name: 'java',
+    icon: java,
   },
   {
-    name: "docker",
+    name: 'docker',
     icon: docker,
   },
 ];
 
 const experiences = [
   {
-    title: "Software Developer",
-    company_name: "Amdocs",
+    title: 'UI II',
+    company_name: 'Flipkart',
+    icon: flipkart,
+    iconBg: '#383E56',
+    date: 'March 2025 - Present',
+    points: [
+      'Contributing to the COE team, driving innovative & best practices for Sellers Platform',
+    ],
+  },
+  {
+    title: 'Software Developer',
+    company_name: 'Amdocs',
     icon: amdocs,
-    iconBg: "#383E56",
-    date: "March 2022 - Present",
+    iconBg: '#383E56',
+    date: 'March 2022 - Feb 2025',
     points: [
-      "Led a successful POC that secured client investment for Amdocs; now serving as UI Lead for the awarded project.",
-      "Engineered an OSS product using micro-frontend architecture, driving a 35% improvement in page load times and earning global adoption by leading telecom companies.",
-      "Developed and implemented REST APIs using Java and Spring Boot for robust, scalable backend services.",
-      "Integrated AI - driven features with the OpenAI API, enhancing product functionality and user engagement by 25%.",
-      "Led a team of 10 developers, ensuring adherence to best practices and code quality.",
-      "Achievements: Received Recognition Award and Employee of the Month for innovative solutions and leadership."
+      'Led a successful POC that secured client investment for Amdocs; now serving as UI Lead for the awarded project.',
+      'Engineered an OSS product using micro-frontend architecture, driving a 35% improvement in page load times and earning global adoption by leading telecom companies.',
+      'Developed and implemented REST APIs using Java and Spring Boot for robust, scalable backend services.',
+      'Integrated AI - driven features with the OpenAI API, enhancing product functionality and user engagement by 25%.',
+      'Led a team of 10 developers, ensuring adherence to best practices and code quality.',
+      'Achievements: Received Recognition Award and Employee of the Month for innovative solutions and leadership.',
     ],
   },
   {
-    title: "Software Engineer",
-    company_name: "AAIC",
+    title: 'Software Engineer',
+    company_name: 'AAIC',
     icon: aaic,
-    iconBg: "#fff",
-    date: "Jun 2021 - March 2022",
+    iconBg: '#fff',
+    date: 'Jun 2021 - March 2022',
     points: [
-      "Spearheaded the full-cycle development of the SkillSage platform, an e-learning application that increased user engagement by 40% and improved conversion rates by 30%.",
-      "Enhanced site performance by optimizing JavaScript bundles, resulting in a 30% increase in Lighthouse score.",
-      "Integrated secure payment gateways using the Razorpay API, contributing to a 25% increase in sales revenue."
+      'Spearheaded the full-cycle development of the SkillSage platform, an e-learning application that increased user engagement by 40% and improved conversion rates by 30%.',
+      'Enhanced site performance by optimizing JavaScript bundles, resulting in a 30% increase in Lighthouse score.',
+      'Integrated secure payment gateways using the Razorpay API, contributing to a 25% increase in sales revenue.',
     ],
   },
   {
-    title: "Web Developer",
-    company_name: "Freelancer",
+    title: 'Web Developer',
+    company_name: 'Freelancer',
     icon: freelancer,
-    iconBg: "#fff",
-    date: "2021 - 2022",
+    iconBg: '#fff',
+    date: '2021 - 2022',
     points: [
-      "Developed and implemented role-based authentication systems using AWS services, enhancing security and user management.",
-      "Managed enterprise security challenges, successfully mitigating Cross-Site Scripting (XSS) vulnerabilities.",
+      'Developed and implemented role-based authentication systems using AWS services, enhancing security and user management.',
+      'Managed enterprise security challenges, successfully mitigating Cross-Site Scripting (XSS) vulnerabilities.',
     ],
   },
   {
-    title: "Programmer Analyst",
-    company_name: "Cognizant",
+    title: 'Programmer Analyst',
+    company_name: 'Cognizant',
     icon: cts,
-    iconBg: "#E6DEDD",
-    date: "Dec 2018 - Apr 2020",
+    iconBg: '#E6DEDD',
+    date: 'Dec 2018 - Apr 2020',
     points: [
-      "Automated image optimization processes, leading to a 15% reduction in page load times and an improved user experience..",
-      "Led the redesign of a high-traffic application, incorporating React.js, which resulted in a 20% increase in user engagement and a 10% boost in customer satisfaction.",
+      'Automated image optimization processes, leading to a 15% reduction in page load times and an improved user experience..',
+      'Led the redesign of a high-traffic application, incorporating React.js, which resulted in a 20% increase in user engagement and a 10% boost in customer satisfaction.',
     ],
   },
 ];
@@ -176,10 +188,10 @@ const experiences = [
 const testimonials = [
   {
     testimonial:
-      "I had the pleasure of working with Aman at Amdocs. He is highly professional, with a strong grasp of all the technologies. Aman is always willing to help and support other colleagues. Highly recommend!",
-    name: "Matan Elmaliach",
-    designation: "Fullstack/Frontend Developer",
-    company: "Amdocs",
+      'I had the pleasure of working with Aman at Amdocs. He is highly professional, with a strong grasp of all the technologies. Aman is always willing to help and support other colleagues. Highly recommend!',
+    name: 'Matan Elmaliach',
+    designation: 'Fullstack/Frontend Developer',
+    company: 'Amdocs',
     image: matan,
   },
   // {
@@ -202,81 +214,88 @@ const testimonials = [
 
 const projects = [
   {
-    name: "AMNEXCHANGE",
+    name: 'AMNEXCHANGE',
     description:
-      "Web-based platform that allows users to send crypto across the world.",
+      'Web-based platform that allows users to send crypto across the world.',
     tags: [
       {
-        name: "react",
-        color: "blue-text-gradient",
+        name: 'react',
+        color: 'blue-text-gradient',
       },
       {
-        name: "solidity",
-        color: "green-text-gradient",
+        name: 'solidity',
+        color: 'green-text-gradient',
       },
       {
-        name: "blockchain",
-        color: "pink-text-gradient",
+        name: 'blockchain',
+        color: 'pink-text-gradient',
       },
     ],
     image: amnExchange,
-    source_code_link: "https://amnexchange.netlify.app/",
+    source_code_link: 'https://amnexchange.netlify.app/',
   },
   {
-    name: "marXeed",
+    name: 'marXeed',
     description:
-      "Marxeed is an A.I. content creation assistant that drafts your blogs in seconds.",
+      'Marxeed is an A.I. content creation assistant that drafts your blogs in seconds.',
     tags: [
       {
-        name: "redux",
-        color: "blue-text-gradient",
+        name: 'redux',
+        color: 'blue-text-gradient',
       },
       {
-        name: "micro-frontend",
-        color: "green-text-gradient",
+        name: 'micro-frontend',
+        color: 'green-text-gradient',
       },
       {
-        name: "ai",
-        color: "pink-text-gradient",
+        name: 'ai',
+        color: 'pink-text-gradient',
       },
     ],
     image: marxeed,
-    source_code_link: "https://marxeed.com/",
+    source_code_link: 'https://marxeed.com/',
   },
   {
-    name: "DocuPhase",
+    name: 'DocuPhase',
     description:
-      "Intelligent Automation Solutions Built for Modern Finance Teams.",
+      'Intelligent Automation Solutions Built for Modern Finance Teams.',
     tags: [
       {
-        name: "react-js",
-        color: "blue-text-gradient",
+        name: 'react-js',
+        color: 'blue-text-gradient',
       },
       {
-        name: "typescript",
-        color: "green-text-gradient",
+        name: 'typescript',
+        color: 'green-text-gradient',
       },
       {
-        name: "aws",
-        color: "pink-text-gradient",
+        name: 'aws',
+        color: 'pink-text-gradient',
       },
     ],
     image: docuphase,
-    source_code_link: "https://github.com/",
+    source_code_link: 'https://github.com/',
   },
 ];
 
 const certifications = [
   {
-    title: "Microsoft Certified: Azure AI Fundamentals",
+    title: 'Microsoft Certified: Azure AI Fundamentals',
     icon: ai900,
-    url: "https://learn.microsoft.com/en-us/users/kumaraman-6661/transcript/v0gm1f3exo8z94r?wt.mc_id=certnurture_eml14_email_wwl"
+    url: 'https://learn.microsoft.com/en-us/users/kumaraman-6661/transcript/v0gm1f3exo8z94r?wt.mc_id=certnurture_eml14_email_wwl',
   },
   {
-    title: "Microsoft Certified: Azure Fundamentals",
+    title: 'Microsoft Certified: Azure Fundamentals',
     icon: az900,
-    url: "https://learn.microsoft.com/en-us/users/amnshrvstv/transcript/vn0o8trkp1k442z?ref=https%3A%2F%2Fwww.linkedin.com%2F"
+    url: 'https://learn.microsoft.com/en-us/users/amnshrvstv/transcript/vn0o8trkp1k442z?ref=https%3A%2F%2Fwww.linkedin.com%2F',
   },
 ];
 
-export { services, technologies, experiences, testimonials, projects, certifications };
+export {
+  services,
+  technologies,
+  experiences,
+  testimonials,
+  projects,
+  certifications,
+};
