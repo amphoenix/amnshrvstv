@@ -27,7 +27,7 @@ const Footer = () => {
     const socialLinks = [
         { href: 'https://www.linkedin.com/in/amnshrvstv/', icon: LinkedInIcon },
         { href: 'https://github.com/amphoenix', icon: GithubIcon },
-        { href: 'https://www.instagram.com/amnshrvstv', icon: IgIcon },
+        { href: 'https://www.instagram.com/amnshrvstv_', icon: IgIcon },
     ];
 
     return (
