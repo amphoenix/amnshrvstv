@@ -99,12 +99,17 @@ const Contact = () => {
     >
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className='flex-[0.75] bg-black-100 p-8 rounded-2xl'
+        className='flex-[0.75] bg-black-10 p-8 rounded-2xl'
       >
         <p className={styles.sectionSubText}>Get in touch</p>
-        <h3 className={styles.sectionHeadText}>Contact.</h3>
+        <button
+          className={styles.sectionHeadText}
+          onClick={() => window.open('https://topmate.io/amnshrvstv', '_blank')}
+        >
+          Let's Talk?? Click me!
+        </button>
 
-        <form
+        {/* <form
           ref={formRef}
           onSubmit={handleSubmit}
           className='mt-12 flex flex-col gap-8'
@@ -155,7 +160,7 @@ const Contact = () => {
           >
             {errors.name || errors.email || errors.message ? "Send" : loading ? "Sending..." : "Send"}
           </button>
-        </form>
+        </form> */}
       </motion.div>
 
       <motion.div

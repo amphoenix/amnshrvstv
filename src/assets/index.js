@@ -27,6 +27,7 @@ import freelancer from './company/freelancer.png';
 import amdocs from './company/amdocs.png';
 import aaic from './company/aaic.png';
 import flipkart from './company/flipkart.png';
+import servicenow from './company/servicenow.png';
 
 import amnExchange from './amnExchange.png';
 import marxeed from './marxeed.png';
@@ -71,4 +72,5 @@ export {
   matan,
   flipkart,
   java,
+  servicenow
 };

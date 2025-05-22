@@ -28,6 +28,7 @@ import {
   matan,
   flipkart,
   java,
+  servicenow
 } from "../assets";
 
 export const navLinks = [
@@ -125,11 +126,19 @@ const technologies = [
 
 const experiences = [
   {
+    title: "SDE III",
+    company_name: "ServiceNow",
+    icon: servicenow,
+    iconBg: "#032D42",
+    date: "May 2025 - present",
+    points: [],
+  },
+  {
     title: "SDE II",
     company_name: "Flipkart",
     icon: flipkart,
     iconBg: "#383E56",
-    date: "March 2025 - Present",
+    date: "March 2025 - May 2025",
     points: [
       "Part of the COE team, Flipkart’s core tech team building and scaling high-impact internal and market-facing products",
       "End-to-end owner of the Flipkart Seller App, leading development, performance, and delivery",
