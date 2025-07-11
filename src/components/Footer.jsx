@@ -29,7 +29,7 @@ const Footer = () => {
         { href: 'https://github.com/amphoenix', icon: GithubIcon },
         { href: 'https://www.instagram.com/amnshrvstv_', icon: IgIcon },
     ];
-
+console.log(year, 'aman');
     return (
         <motion.footer
             className="bg-gray-800 text-white py-6"
