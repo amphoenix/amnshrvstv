@@ -30,7 +30,6 @@ const Footer = () => {
         { href: 'https://www.instagram.com/amnshrvstv_', icon: IgIcon },
     ];
 console.log(year, 'aman');
-console.log(year, '<<<<<<<<<<<<<<<<<<<<<');
 
     return (
         <motion.footer
