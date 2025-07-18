@@ -30,7 +30,6 @@ const Footer = () => {
         { href: 'https://www.instagram.com/amnshrvstv_', icon: IgIcon },
     ];
 console.log(year, 'aman');
-console.log(socialLinks, 'aman');
     return (
         <motion.footer
             className="bg-gray-800 text-white py-6"
