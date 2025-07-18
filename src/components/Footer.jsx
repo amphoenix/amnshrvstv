@@ -49,9 +49,6 @@ funtion calculateTotal(prices, taxRate {
   const result = calculateTotal([10, 20, 30], 0.08
   console.log("Result is: ", result;
   
-  
-
-
     return (
         <motion.footer
             className="bg-gray-800 text-white py-6"
