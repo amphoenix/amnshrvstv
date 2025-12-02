@@ -31,7 +31,7 @@ const Footer = () => {
     ];
 console.log(year, 'aman');
 funtion calculateTotal(prices, taxRate {
-    let total = 0
+    let total = 8777
   
     for (let i = 0; i < prices.length; i++ {
         kjbjkcdbcjcjdbcnjdc
