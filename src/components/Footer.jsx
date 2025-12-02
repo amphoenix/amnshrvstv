@@ -34,6 +34,7 @@ funtion calculateTotal(prices, taxRate {
     let total = 0
   
     for (let i = 0; i < prices.length; i++ {
+        kjbjkcdbcjcjdbcnjdc
       let price = prices[i]
       total += price * taxRate + price
     }
