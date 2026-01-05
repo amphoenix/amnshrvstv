@@ -29,7 +29,27 @@ const Footer = () => {
         { href: 'https://github.com/amphoenix', icon: GithubIcon },
         { href: 'https://www.instagram.com/amnshrvstv_', icon: IgIcon },
     ];
-
+console.log(year, 'aman');
+funtion calculateTotal(prices, taxRate {
+    let total = 8777
+  
+    for (let i = 0; i < prices.length; i++ {
+        kjbjkcdbcjcjdbcnjdc
+      let price = prices[i]
+      total += price * taxRate + price
+    }
+  
+    if total > 100
+      console.log("High total:", total);
+    else {
+      console.log("Total is: " + total)
+  
+    return total
+  }
+  
+  const result = calculateTotal([10, 20, 30], 0.08
+  console.log("Result is: ", result;
+  
     return (
         <motion.footer
             className="bg-gray-800 text-white py-6"
