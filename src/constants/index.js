@@ -5,15 +5,11 @@ import {
   web,
   javascript,
   typescript,
-  html,
-  css,
   reactjs,
   redux,
   tailwind,
   nodejs,
   mongodb,
-  git,
-  figma,
   docker,
   cts,
   amdocs,
@@ -22,12 +18,16 @@ import {
   amnExchange,
   marxeed,
   docuphase,
-  threejs,
   ai900,
   az900,
   matan,
   flipkart,
   java,
+  go,
+  postgresql,
+  graphql,
+  redis,
+  kubernetes,
   servicenow
 } from "../assets";
 
@@ -71,14 +71,6 @@ const services = [
 
 const technologies = [
   {
-    name: "HTML 5",
-    icon: html,
-  },
-  {
-    name: "CSS 3",
-    icon: css,
-  },
-  {
     name: "JavaScript",
     icon: javascript,
   },
@@ -91,36 +83,48 @@ const technologies = [
     icon: reactjs,
   },
   {
-    name: "Redux Toolkit",
+    name: "Redux",
     icon: redux,
-  },
-  {
-    name: "Tailwind CSS",
-    icon: tailwind,
   },
   {
     name: "Node JS",
     icon: nodejs,
   },
   {
+    name: "Go",
+    icon: go,
+  },
+  {
+    name: "Java",
+    icon: java,
+  },
+  {
+    name: "GraphQL",
+    icon: graphql,
+  },
+  {
+    name: "PostgreSQL",
+    icon: postgresql,
+  },
+  {
     name: "MongoDB",
     icon: mongodb,
   },
   {
-    name: "Three JS",
-    icon: threejs,
-  },
-  {
-    name: "git",
-    icon: git,
-  },
-  {
-    name: "java",
-    icon: java,
-  },
-  {
-    name: "docker",
+    name: "Docker",
     icon: docker,
+  },
+  {
+    name: "Kubernetes",
+    icon: kubernetes,
+  },
+  {
+    name: "Redis",
+    icon: redis,
+  },
+  {
+    name: "Tailwind CSS",
+    icon: tailwind,
   },
 ];
 
@@ -131,7 +135,12 @@ const experiences = [
     icon: servicenow,
     iconBg: "#032D42",
     date: "May 2025 - present",
-    points: [],
+    points: [
+      "Improved frontend performance by 35% through batch processing, caching and architectural optimizations.",
+      "Built a YAML-driven Jenkins pipeline integrated with Claude for automated PR reviews.",
+      "Engineered a Go-based parallel multi-model orchestration framework for dynamic LLM/SLM routing and low-latency execution.",
+      "Architected RAG pipelines and deployed self-hosted SLM infrastructure with semantic retrieval, reducing cost and improving inference performance.",
+    ],
   },
   {
     title: "SDE II",
@@ -140,10 +149,7 @@ const experiences = [
     iconBg: "#383E56",
     date: "March 2025 - May 2025",
     points: [
-      "Part of the COE team, Flipkart’s core tech team building and scaling high-impact internal and market-facing products",
-      "End-to-end owner of the Flipkart Seller App, leading development, performance, and delivery",
-      "Working with GraphQL for efficient API orchestration",
-      "Managing CI/CD, Flipper, and Firebase Console for stable and fast releases",
+      "End-to-end owner of the Flipkart Seller App within the COE team, driving scalable architecture and performance optimization.",
     ],
   },
   {
@@ -153,11 +159,9 @@ const experiences = [
     iconBg: "#383E56",
     date: "March 2022 - Feb 2025",
     points: [
-      "Led a successful POC that secured client investment for Amdocs; now serving as UI Lead for the awarded project.",
-      "Engineered an OSS product using micro-frontend architecture, driving a 35% improvement in page load times and earning global adoption by leading telecom companies.",
-      "Developed and implemented REST APIs using Java and Spring Boot for robust, scalable backend services.",
-      "Integrated AI - driven features with the OpenAI API, enhancing product functionality and user engagement by 25%.",
-      "Led a team of 10 developers, ensuring adherence to best practices and code quality.",
+      "Led a client POC that secured enterprise investment; promoted to UI Lead for the awarded program.",
+      "Architected a micro-frontend OSS platform, improving page load performance by 35%.",
+      "Built scalable REST APIs using Java & Spring Boot and led a team of 7 engineers to ensure high-quality delivery.",
       "Achievements: Received Recognition Award and Employee of the Month for innovative solutions and leadership.",
     ],
   },
@@ -168,20 +172,17 @@ const experiences = [
     iconBg: "#fff",
     date: "Jun 2021 - March 2022",
     points: [
-      "Spearheaded the full-cycle development of the SkillSage platform, an e-learning application that increased user engagement by 40% and improved conversion rates by 30%.",
-      "Enhanced site performance by optimizing JavaScript bundles, resulting in a 30% increase in Lighthouse score.",
-      "Integrated secure payment gateways using the Razorpay API, contributing to a 25% increase in sales revenue.",
+      "Built and scaled an e-learning platform, improving engagement by 40% and performance scores by 30%.",
     ],
   },
   {
-    title: "Web Developer",
+    title: "Freelancer UI Developer",
     company_name: "Freelancer",
     icon: freelancer,
     iconBg: "#fff",
     date: "2021 - 2022",
     points: [
-      "Developed and implemented role-based authentication systems using AWS services, enhancing security and user management.",
-      "Managed enterprise security challenges, successfully mitigating Cross-Site Scripting (XSS) vulnerabilities.",
+      "Implemented AWS-based authentication and resolved XSS vulnerabilities to improve application security.",
     ],
   },
   {
@@ -191,8 +192,7 @@ const experiences = [
     iconBg: "#E6DEDD",
     date: "Dec 2018 - Apr 2020",
     points: [
-      "Automated image optimization processes, leading to a 15% reduction in page load times and an improved user experience..",
-      "Led the redesign of a high-traffic application, incorporating React.js, which resulted in a 20% increase in user engagement and a 10% boost in customer satisfaction.",
+      "Improved performance of a high-traffic React application, reducing load time by 15% and increasing engagement by 20%.",
     ],
   },
 ];
@@ -294,7 +294,7 @@ const certifications = [
   {
     title: "Microsoft Certified: Azure AI Fundamentals",
     icon: ai900,
-    url: "https://learn.microsoft.com/en-us/users/kumaraman-6661/transcript/v0gm1f3exo8z94r?wt.mc_id=certnurture_eml14_email_wwl",
+    url: "https://learn.microsoft.com/en-in/users/amnshrvstv/transcript/v0gm1f3exo8z94r",
   },
   {
     title: "Microsoft Certified: Azure Fundamentals",
