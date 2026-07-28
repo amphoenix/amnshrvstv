@@ -27,7 +27,7 @@ const App = () => {
             </div>
           }
         />
-        <Route path='/study' element={<StudyPage />} />
+        <Route path='/prep' element={<StudyPage />} />
       </Routes>
     </BrowserRouter>
   );
