@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { About, Contact, Experience, Feedbacks, Hero, Navbar, Tech, Works, Footer } from "./components";
 import Shapes from "./components/Shapes";
 import StudyPage from "./pages/study/StudyPage";
+import NotFound from "./pages/notFound/NotFound";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           }
         />
         <Route path='/prep' element={<StudyPage />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
