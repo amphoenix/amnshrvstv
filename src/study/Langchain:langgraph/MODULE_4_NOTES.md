@@ -1,4 +1,4 @@
-# Module 4 — RAG (Retrieval-Augmented Generation) (IN PROGRESS)
+# Module 4 — RAG (Retrieval-Augmented Generation)
 
 ## L1: What is RAG & Why It Exists
 
@@ -53,7 +53,15 @@ Long Context → medium cost, needle-in-haystack problem at scale
 ### Knowledge Graphs vs RAG (student question):
 Not competitors — complementary. RAG finds paragraphs by meaning (unstructured). KGs find entities and relationships (structured). Best systems combine both. KGs covered in Module 5.
 
-### Quiz: PASS (3/3) — Clean. R-A-G stages, chunking rationale, RAG vs fine-tuning.
+### Quiz: PASS (3/3)
+**Q1: What are the 3 stages of RAG? What happens in each?**
+My answer: ✅ Retrieve (search knowledge base → top-K chunks), Augment (build prompt with chunks + question), Generate (LLM produces grounded response).
+
+**Q2: Why chunk documents instead of embedding them whole?**
+My answer: ✅ Whole doc = too big, mostly irrelevant noise. Chunks = fit easily, high signal-to-noise ratio.
+
+**Q3: RAG vs fine-tuning — when to use each?**
+My answer: ✅ RAG = cheap, instant updates, scales to millions of docs. Fine-tuning = expensive, stale, good for style/behavior changes.
 
 ---
 
@@ -184,12 +192,16 @@ Chunking = sliding window over an array with overlap
 Overlap  = like Array.slice() with step < window size
 ```
 
-### Quiz Q&A:
-**Q1: Two fields on Document?** `page_content` (text string) and `metadata` (dict with source info for citations/filtering).
-**Q2: chunk_overlap=0 splits a sentence?** No overlap = context lost at boundaries. Fix: add overlap (~50 chars) as context bridge.
-**Q3: RAG over Python codebase?** Use `RecursiveCharacterTextSplitter.from_language(language=Language.PYTHON)` — language-aware, splits on functions/classes. NOT semantic chunking (that's for prose, uses text embeddings not suited for code structure).
+### Quiz: PASS (2/3)
+**Q1: What are the two fields on a Document object?**
+My answer: ✅ `page_content` (the text string) and `metadata` (dict with source info for citations/filtering).
 
-### Quiz: PASS (2/3) — Q3 corrected: semantic chunking = prose, language-aware splitter = code.
+**Q2: You set chunk_overlap=0 and a key sentence gets split across two chunks. What happened?**
+My answer: ✅ No overlap = context lost at chunk boundaries. Fix: add overlap (~50 chars) as a context bridge.
+
+**Q3: Building RAG over a Python codebase — which chunking strategy?**
+⚠️ My answer: ❌ Said semantic chunking — WRONG. Semantic chunking = prose (uses text embeddings, not suited for code structure).
+✅ Correct: `RecursiveCharacterTextSplitter.from_language(language=Language.PYTHON)` — language-aware, splits on functions/classes.
 
 ---
 
@@ -239,12 +251,17 @@ No API budget/offline?  → all-MiniLM-L6-v2 (FREE, local, HuggingFace)
 Code search?            → voyage-code-3
 ```
 
-### Quiz Q&A:
-**Q1: embed_query vs embed_documents?** query = one text (search), documents = many texts (indexing). ✅
-**Q2: Index with small, query with large?** BROKEN — different dimensions, incompatible vectors, retrieval fails. Must use SAME model. Must re-index if upgrading. ❌ (student said "better accuracy" — missed the incompatibility)
-**Q3: 500 docs, no API budget?** all-MiniLM-L6-v2 — free, runs locally, no API calls needed. ❌ (student picked OpenAI model which costs money)
+### Quiz: PASS (1/3)
+**Q1: What's the difference between `embed_query()` and `embed_documents()`?**
+My answer: ✅ `embed_query()` = one text (user's search query). `embed_documents()` = many texts (chunks, during indexing).
 
-### Quiz: PASS (1/3) — Two key rules learned: same model for index+query, no budget = local model.
+**Q2: You indexed with text-embedding-3-small but query with text-embedding-3-large. What happens?**
+⚠️ My answer: ❌ Said "better accuracy" — WRONG. Different dimensions (1536 vs 3072), vectors incompatible, retrieval FAILS.
+✅ Correct: Must use SAME model for indexing AND querying. If upgrading → must RE-INDEX everything.
+
+**Q3: 500 internal docs, no API budget. Which embedding model?**
+⚠️ My answer: ❌ Picked OpenAI model (costs money).
+✅ Correct: `all-MiniLM-L6-v2` — free, runs locally via HuggingFace, no API calls needed.
 
 ---
 
@@ -289,12 +306,15 @@ Production, no DevOps?      → Pinecone (managed cloud)
 Large scale, self-hosting?  → Qdrant or Weaviate
 ```
 
-### Quiz Q&A:
-**Q1: Vector store for hackathon?** Chroma or FAISS — both lightweight, zero setup. ✅
-**Q2: What does as_retriever() do?** Wraps vector store into standard retriever interface for chains. ✅
-**Q3: Company already on Postgres?** pgvector — no new infrastructure, one DB for everything. ✅
+### Quiz: PASS (3/3)
+**Q1: You're at a hackathon. Which vector store?**
+My answer: ✅ Chroma or FAISS — both lightweight, zero setup.
 
-### Quiz: PASS (3/3) — Clean.
+**Q2: What does `as_retriever()` do?**
+My answer: ✅ Wraps vector store into standard LangChain retriever interface — pluggable into any RAG chain.
+
+**Q3: Company already on Postgres, needs vector search. What do you use?**
+My answer: ✅ pgvector — Postgres extension, no new infrastructure, one DB for everything.
 
 ---
 
@@ -338,12 +358,16 @@ retriever = vectorstore.as_retriever(
 k=1-2  → precise facts    |  k=3-5  → good default    |  k=8-10 → comprehensive
 ```
 
-### Quiz Q&A:
-**Q1: Redundant results fix?** MMR, lambda_mult controls relevance-diversity balance. ✅
-**Q2: Ticket ID search fails?** Hybrid — semantic + keyword (BM25) catches exact terms. ✅
-**Q3: When to use score_threshold?** Partial — described mechanism but needed concrete scenario (e.g., medical chatbot: wrong drug info worse than no answer). 🔄
-
 ### Quiz: PASS (2.5/3)
+**Q1: Your retrieval returns 4 nearly identical chunks. How to fix?**
+My answer: ✅ MMR (Max Marginal Relevance) — `lambda_mult` controls relevance-diversity balance.
+
+**Q2: User searches for ticket ID "INC00123456" but semantic search returns nothing useful. Fix?**
+My answer: ✅ Hybrid search — semantic + keyword (BM25) catches exact terms like ticket IDs.
+
+**Q3: When would you use score_threshold retrieval?**
+🔄 My answer: Described mechanism correctly but missed concrete scenario.
+✅ Better answer: When wrong answer is worse than no answer (e.g., medical chatbot — wrong drug info is dangerous, better to say "I don't know").
 
 ---
 
@@ -383,12 +407,15 @@ Best: Use BOTH → filter scope → search → rerank → top-K
 
 ### Multi-tenant Security: Metadata filtering, NOT reranking. Reranking re-orders but doesn't EXCLUDE. Filtering REMOVES from search space entirely.
 
-### Quiz Q&A:
-**Q1: Why rerankers beat vector search?** Reads query+doc together vs separately. ✅
-**Q2: Rerank top_n=4, base k=4?** Pointless — fetch wide (k=20), rerank narrow (top_n=4). ✅
-**Q3: Multi-tenant, Company A can't see B's docs?** Metadata filtering — security boundary, not ranking. ✅
+### Quiz: PASS (3/3)
+**Q1: Why do rerankers produce better results than vector search alone?**
+My answer: ✅ Reranker reads query AND document TOGETHER as one input (cross-encoder). Vector search embeds them separately and compares vectors.
 
-### Quiz: PASS (3/3) — Clean.
+**Q2: You set `top_n=4` on the reranker but `k=4` on the base retriever. What's wrong?**
+My answer: ✅ Pointless — reranking 4 docs down to 4. Must fetch wide (`k=20`), rerank narrow (`top_n=4`).
+
+**Q3: Multi-tenant app — Company A must never see Company B's docs. Reranker or metadata filter?**
+My answer: ✅ Metadata filtering — security boundary. Reranking re-orders but doesn't EXCLUDE docs from search space.
 
 ---
 
@@ -423,12 +450,16 @@ Result: latency nightmare + high cost.
 Rule: Start with plain retrieval. Add techniques ONLY when you measure a specific problem.
 ```
 
-### Quiz Q&A:
-**Q1: "it doesn't work" returns garbage?** Query rewriting — LLM transforms vague query into precise search query. ✅
-**Q2: What is HyDE?** Hypothetical answer closer in embedding space than question. Different vocabulary. ✅
-**Q3: Stack all techniques — problem?** ❌ (answered multi-query benefit instead of latency/cost problem of 8-10 LLM calls per query)
-
 ### Quiz: PASS (2/3)
+**Q1: User types "it doesn't work" and retrieval returns garbage. Fix?**
+My answer: ✅ Query rewriting — LLM transforms vague query into precise search query (e.g., "SSO login authentication failure troubleshooting").
+
+**Q2: What is HyDE and why does it work?**
+My answer: ✅ Generate hypothetical answer, search with THAT. Works because hypothetical answer is closer in embedding space to actual docs than the original question (different vocabulary).
+
+**Q3: You stack query rewriting + HyDE + multi-query + compression on every query. What's the problem?**
+⚠️ My answer: ❌ Answered multi-query benefit instead of the actual problem.
+✅ Correct: Each technique adds 1+ LLM calls. Stacking all = 8-10 LLM calls per query → latency nightmare + high cost. Start with plain retrieval, add techniques only when you measure a specific problem.
 
 ---
 
@@ -476,26 +507,60 @@ result = evaluate(dataset, metrics=[faithfulness, answer_relevancy, context_prec
 - Evaluate regularly (quality drifts as docs change)
 - Use a different/stronger model to evaluate (not the same LLM)
 
-### Quiz Q&A:
-**Q1: LLM says 90 days, context says 30 days?** Faithfulness — LLM not grounded in context. ❌ (student said context relevance)
-**Q2: 3 metrics of RAG Triad?** Context Relevance (retrieval), Faithfulness + Answer Relevance (generation). 🔄
-**Q3: High faithfulness, low answer relevance?** Retrieved chunks don't contain the actual answer. LLM faithfully summarizes irrelevant info. Fix retrieval. ❌ (student said "no idea")
+### Quiz: PASS (0.5/3) — RAG Triad needs revision.
+**Q1: Context says "30 days", LLM answers "90 days". Which RAG Triad metric failed?**
+⚠️ My answer: ❌ Said "context relevance" — WRONG. The chunks WERE relevant (they contained "30 days").
+✅ Correct: **Faithfulness** — LLM ignored/hallucinated instead of staying grounded in the retrieved context.
 
-### Quiz: PASS (0.5/3) — RAG Triad needs revision. Key: faithfulness = grounded in context, context relevance = right chunks found.
+**Q2: Name the 3 metrics of the RAG Triad and which stage each measures.**
+🔄 My answer: Listed them but mixed up which stage each belongs to.
+✅ Correct: Context Relevance (RETRIEVAL), Faithfulness (GENERATION), Answer Relevance (GENERATION).
+
+**Q3: High faithfulness but low answer relevance. What's happening and how to fix?**
+⚠️ My answer: ❌ Said "no idea."
+✅ Correct: LLM is faithfully summarizing the WRONG chunks. Retrieved context doesn't contain the actual answer. Fix: improve RETRIEVAL (better chunking, embeddings, reranker).
+
+**Key distinction**: faithfulness = grounded in context, context relevance = right chunks found.
 
 ---
 
 ## MODULE 4 EXAM — 100% PASS (14/14) — First attempt, best exam yet.
 
-### Section A (5/5): All concepts correct. RAG stages, Document fields, same model rule, RAG Triad classification, chunk_overlap purpose.
+### Section A (5/5):
+
+**A1: What are the 3 stages of RAG?**
+My answer: ✅ Retrieve, Augment, Generate.
+
+**A2: What are the two fields on a Document object?**
+My answer: ✅ `page_content` and `metadata`.
+
+**A3: You index with model A and query with model B. What happens?**
+My answer: ✅ Vectors incompatible, retrieval fails. Must use same model.
+
+**A4: Context says "30 days", LLM says "90 days". Which RAG Triad metric?**
+My answer: ✅ Faithfulness — LLM not grounded in context.
+🎉 **Got this RIGHT on exam after getting it WRONG on L8 quiz.**
+
+**A5: What does chunk_overlap prevent?**
+My answer: ✅ Prevents losing context at chunk boundaries — sentences split across chunks.
 
 ### Section B (6/6):
-- **B1**: Found both bugs (mismatched models, unused reranker). Also improved k=4→10 (fetch wide, rerank narrow).
-- **B2**: Query rewriting with conversation history for context. Clean.
-- **B3**: Reranker doesn't enforce access control. Metadata filtering needed for multi-tenant security.
+
+**B1: Debug this RAG pipeline — find the bugs.**
+My answer: ✅ Found both bugs: (1) mismatched embedding models for index vs query, (2) reranker defined but never used. Also improved k=4→10 (fetch wide, rerank narrow).
+
+**B2: User asks a follow-up question but retrieval returns irrelevant results. Fix.**
+My answer: ✅ Query rewriting — use conversation history to rewrite vague follow-up into standalone search query.
+
+**B3: Multi-tenant app — Company A sees Company B's docs after reranking. Fix.**
+My answer: ✅ Reranker doesn't enforce access control (it re-orders, doesn't exclude). Need metadata filtering as security boundary.
 
 ### Section C (4/4):
-- **C1**: text-embedding-3-small + Chroma + reranker + incremental re-indexing for monthly updates.
-- **C2**: Correctly diagnosed low context_relevance (0.45) as retrieval problem. Faithfulness/answer_relevance high = LLM is fine. Both fixes target retrieval.
 
-### Key Improvement: RAG Triad confusion from L8 quiz fully resolved in exam.
+**C1: Design a RAG system for 10k internal docs with monthly updates.**
+My answer: ✅ text-embedding-3-small + Chroma + reranker + incremental re-indexing for monthly updates.
+
+**C2: RAGAS scores: context_relevance=0.45, faithfulness=0.92, answer_relevance=0.88. Diagnose and fix.**
+My answer: ✅ Low context_relevance = retrieval problem. Faithfulness + answer_relevance high = LLM is fine. Both fixes should target retrieval (better chunking, embeddings, reranker).
+
+### Key Improvement: RAG Triad confusion from L8 quiz (0.5/3) fully resolved in exam (A4 ✅).

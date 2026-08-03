@@ -594,12 +594,13 @@ result.content     # ❌ AttributeError! Pydantic objects have NO .content
 - `@tool` = "here's a button you can ask me to press"
 - `.with_structured_output()` = "fill out this form for me"
 
-### Quiz Q&A:
+### Quiz Q&A (covered in exam, not standalone quiz):
 **Q1: What does `.with_structured_output()` return — AIMessage or Pydantic object?**
-A: Pydantic object. Access fields directly (`.priority`, `.category`). NO `.content`.
+Correct answer: Pydantic object. Access fields directly (`.priority`, `.category`). NO `.content`.
+⚠️ I got this WRONG on the exam (B2) — said "you can't use structured.invoke" when you can. The bug is using `.content` on the Pydantic result.
 
 **Q2: When would you use `@tool` vs `.with_structured_output()`?**
-A: `@tool` when the LLM needs to DO something (action/side effect). `.with_structured_output()` when the LLM needs to RETURN structured data (classification/extraction).
+Correct answer: `@tool` when the LLM needs to DO something (action/side effect). `.with_structured_output()` when the LLM needs to RETURN structured data (classification/extraction).
 
 ---
 
@@ -660,12 +661,12 @@ astream_events()   → full control, token-level streaming in UI
 
 ### 🔑 KEY: Streaming works because autoregressive generation = one token at a time.
 
-### Quiz Q&A:
+### Quiz Q&A (covered in exam, not standalone quiz):
 **Q1: WHY can LLMs stream their output? What makes it technically possible?**
-A: Autoregressive generation — the model produces ONE token at a time, each as a separate prediction step. Each token can be sent immediately as it's generated. NOT about the input pipeline.
+Correct answer: Autoregressive generation — the model produces ONE token at a time, each as a separate prediction step. Each token can be sent immediately as it's generated. NOT about the input pipeline.
 
 **Q2: What's the difference between `model.stream()` and `agent.stream()`?**
-A: `model.stream()` gives token-by-token chunks (AIMessageChunk). `agent.stream()` gives step-level events (full tool calls, tool results, final answer).
+Correct answer: `model.stream()` gives token-by-token chunks (AIMessageChunk). `agent.stream()` gives step-level events (full tool calls, tool results, final answer).
 
 ---
 
@@ -707,15 +708,16 @@ Long-term  = knowledge across ALL conversations (vector DBs, user profiles — M
 
 ### 🔑 KEY: `thread_id` alone does NOTHING. You need checkpointer + thread_id together.
 
-### Quiz Q&A:
+### Quiz Q&A (covered in exam, not standalone quiz):
 **Q1: What happens with same thread_id? Different thread_id?**
-A: Same = agent has full conversation history, continues where it left off. Different = fresh start, no memory of previous conversation.
+Correct answer: Same = agent has full conversation history, continues where it left off. Different = fresh start, no memory of previous conversation.
 
 **Q2: Why is MemorySaver not suitable for production? What would you use?**
-A: Data is in RAM — lost on server restart. Use `PostgresSaver` or `SqliteSaver` for persistence.
+Correct answer: Data is in RAM — lost on server restart. Use `PostgresSaver` or `SqliteSaver` for persistence.
 
 **Q3: A developer's agent "forgets" after server restart. They're using MemorySaver. Fix?**
-A: Switch to a persistent checkpointer (`PostgresSaver`, `SqliteSaver`). MemorySaver is RAM-only.
+Correct answer: Switch to a persistent checkpointer (`PostgresSaver`, `SqliteSaver`). MemorySaver is RAM-only.
+⚠️ On exam (C1): I said "need thread_id" but they already HAD thread_id — the missing piece was the `checkpointer=memory` param.
 
 ---
 
@@ -900,9 +902,36 @@ Traces for your LLM/agent behavior.
 ## MODULE 2 EXAM: 72% PASS (after retries)
 
 ### Initial attempt: 19/100 ❌ FAIL
+
+**A1: What does `init_chat_model` return? (5/10)**
+🔄 My answer: Partial — described it but imprecise.
+
+**A2: What is the return type of `model.invoke()`? (5/10)**
+🔄 My answer: Partial.
+
+**B1: Write a `@tool` function for order lookup with proper docstring and type hints. (SKIPPED)**
+⚠️ My answer: ❌ Skipped entirely.
+
+**B2: Debug this code — `result = structured.invoke(...); print(result.content)` (0/10)**
+⚠️ My answer: ❌ Said "you can't use structured.invoke" — WRONG. You CAN. The bug is using `.content` on a Pydantic object (it has `.name`, `.email`, etc., NOT `.content`).
+
+**B3: Write a system prompt with tool usage rules. (SKIPPED)**
+⚠️ My answer: ❌ Skipped entirely.
+
+**C1: Agent forgets conversation after each message. Code has `thread_id` but no checkpointer. Fix. (10/10)**
+⚠️ My answer (1st): ❌ Said "need thread_id" — they already HAD thread_id. Missing piece was `checkpointer=MemorySaver()`.
+✅ Fixed on retry.
+
+**C2: LLM keeps calling the wrong tool. How to fix? (10/10)**
+My answer: ✅ Fix the tool's docstring/description — that's what the LLM reads to decide.
+
+**D1: Design a support agent architecture — classify, lookup, workflow. Which LangChain pattern for each? (10/10)**
+My answer: ✅ classify → `.with_structured_output()`, lookup → `@tool`, workflow → `create_react_agent()`.
+
+**D2: Write the system prompt for that agent. (5/10)**
+🔄 My answer: Partial on first attempt.
+
 - Skipped 4 of 9 questions (B1, B3, D1, D2)
-- ⚠️ B2: Said "you can't use structured.invoke" — WRONG (you can — bug is `.content` on Pydantic)
-- ⚠️ C1: Said "need thread_id" — they already HAD thread_id (missing `checkpointer`)
 - ⚠️ R2 first attempt: Wrote 6 motivational poster sentences instead of actionable rules
 
 ### Retry corrections:

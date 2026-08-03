@@ -1,4 +1,4 @@
-# Module 6 — Structured Execution Patterns (IN PROGRESS)
+# Module 6 — Structured Execution Patterns
 
 ## L1: ReAct (Reasoning + Acting)
 

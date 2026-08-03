@@ -1,4 +1,4 @@
-# Module 3 — LangGraph Fundamentals (DONE — 86% PASS)
+# Module 3 — LangGraph Fundamentals
 
 ## L1: What is LangGraph & Why It Exists
 
@@ -19,6 +19,14 @@
 - Conditional edges ≈ middleware that redirects
 
 ### Quiz: PASS (3/3)
+**Q1: What's wrong with `create_react_agent` for a production ServiceNow agent?**
+My answer: ✅ It's a single loop — model controls everything. No branching, no human approval, no custom routing.
+
+**Q2: LangGraph models agents as a ___. What are the 3 components?**
+My answer: ✅ Directed graph. Components: State, Nodes, Edges.
+
+**Q3: What JS pattern is LangGraph State most similar to?**
+My answer: ✅ Redux store — shared state that flows through all handlers.
 
 ---
 
@@ -49,7 +57,16 @@ CONDITIONS: After ___: if ___ → ___, else → ___
 - Conditional edge: after classify → if P0 → escalate, else → lookup
 - Code: `graph.add_conditional_edges("classify", route_by_priority)`
 
-### Quiz: PASS (retry) | Key fix: each node does ONE thing. "Refund" is 3 nodes: check, process, apologize.
+### Quiz: PASS (retry)
+**Q1: Design a refund agent — what are the nodes?**
+⚠️ My answer (first): "refund" as one node — ❌ WRONG. Each node does ONE thing.
+✅ Correct: 3 nodes — check_eligibility, process_refund, send_apology.
+
+**Q2: What's the FIRST step before writing any LangGraph code?**
+My answer: ✅ Design the graph (define state, nodes, edges, conditions) — step 1 of the 5-step process.
+
+**Q3: In a ServiceNow incident agent, what conditional edge would you add after classify?**
+My answer: ✅ If P0 → escalate, else → lookup.
 
 ---
 
@@ -94,6 +111,20 @@ Rule: Use reducer when you want to ACCUMULATE.
 
 ### 🔑 KEY: Without reducer on messages, each node REPLACES the history → conversation lost.
 
+### ⚠️ SCOPE CLARIFICATION (confused me later — see project-1):
+```
+add_messages reducer = messages survive across NODES (within ONE invoke() run)
+  classify → retrieve → generate → evaluate
+  Each node's messages APPEND to state ✅
+
+Checkpointer (L8) = messages survive across INVOKE() CALLS (between user turns)
+  invoke("What's your refund policy?")  → works
+  invoke("And for international?")      → ❌ NO CONTEXT without checkpointer
+
+My project-1 has: add_messages ✅ (nodes talk to each other)
+My project-1 missing: checkpointer ❌ (no multi-turn memory)
+```
+
 ### JS Analogy:
 ```javascript
 // Redux reducer — same concept:
@@ -105,13 +136,13 @@ function messagesReducer(state = [], action) {
 
 ### Quiz Q&A:
 **Q1: What happens if `messages: list` (no reducer) and two nodes each return a message?**
-A: Second node's message replaces first → history lost.
+My answer: ✅ Second node's message replaces first → history lost.
 
 **Q2: What does `Annotated[list, add_messages]` mean in plain English?**
-A: "This is a list. When nodes return new items, APPEND them to the existing list instead of replacing."
+My answer: ✅ "This is a list. When nodes return new items, APPEND them to the existing list instead of replacing."
 
 **Q3: When would you use plain `str` vs `Annotated[list, reducer]`?**
-A: Plain for latest value (IDs, priority). Annotated for accumulating (messages, conversation history).
+My answer: ✅ Plain for latest value (IDs, priority). Annotated for accumulating (messages, conversation history).
 
 ---
 
@@ -194,13 +225,13 @@ if state["priority"] == "P0"   # ✅ checks value equality
 
 ### Quiz Q&A:
 **Q1: What does a node receive and return?**
-A: Receives full state dict. Returns partial dict with only changed keys.
+My answer: ✅ Receives full state dict. Returns partial dict with only changed keys.
 
 **Q2: Node only updates priority. Must it also return messages, customer_id, resolved?**
-A: No. Return only changed keys. Unchanged keys stay as-is.
+My answer: ✅ No. Return only changed keys. Unchanged keys stay as-is.
 
 **Q3: Write an escalate node that checks priority.**
-A:
+My answer: ✅
 ```python
 def escalate(state: AgentState) -> dict:
     if state["priority"] == "P0":
@@ -251,9 +282,14 @@ def route(state: AgentState) -> str:
 ### ⚠️ Typo Danger: routing returns strings. If you return `"appprove"` but node is named `"approve"` → runtime crash.
 
 ### Quiz Q&A:
-**Q1: 3 types of edges?** Fixed, Conditional, Entry Point.
-**Q2: Routing function for age check?** Read `state["age"]`, not raw param.
-**Q3: Typo in routing return?** Crashes — string doesn't match any node name.
+**Q1: Name the 3 types of edges in LangGraph.**
+My answer: ✅ Fixed, Conditional, Entry Point.
+
+**Q2: Write a routing function that checks age — what's the common mistake?**
+My answer: ✅ Read `state["age"]`, not raw param. The function receives full state dict, not individual values.
+
+**Q3: You return `"appprove"` from routing but the node is named `"approve"`. What happens?**
+My answer: ✅ Runtime crash — string doesn't match any node name.
 
 ---
 
@@ -297,9 +333,14 @@ result = agent.invoke({"messages": [HumanMessage(content="Server is down")]})
 ```
 
 ### Quiz Q&A:
-**Q1: graph vs agent?** Builder (mutable) vs compiled (frozen, executable). Can't add nodes to agent.
-**Q2: What does invoke() return?** Complete final state dict, not just last node's output.
-**Q3: graph.invoke(...) — what's wrong?** Must use agent.invoke(), not graph.invoke().
+**Q1: What's the difference between `graph` and `agent`?**
+My answer: ✅ `graph` = builder (mutable, add nodes/edges). `agent` = compiled (frozen, executable). Can't add nodes after compile.
+
+**Q2: What does `agent.invoke()` return?**
+My answer: ✅ Complete final state dict (every key, all updates applied) — not just last node's output.
+
+**Q3: `graph.invoke({...})` — what's wrong?**
+My answer: ✅ Must use `agent.invoke()`. `graph` is the builder, not executable.
 
 ---
 
@@ -350,15 +391,29 @@ Functional API: Simple linear pipelines, no shared state, quick prototypes
 ```
 
 ### Quiz Q&A:
-**Q1: Two decorators?** @task (unit of work, checkpointed) and @entrypoint (orchestrator, what you call).
-**Q2: How to get task return value?** .result() — like JS await.
-**Q3: Graph API over Functional?** Complex branching, shared mutable state, human-in-the-loop.
+**Q1: What are the two decorators in the Functional API?**
+My answer: ✅ `@task` (unit of work, auto-checkpointed) and `@entrypoint` (orchestrator, what you call to run).
+
+**Q2: How do you get the return value of a task?**
+My answer: ✅ `.result()` — like JS `await`. `classify(text)` returns Future, `.result()` blocks until done.
+
+**Q3: When would you choose Graph API over Functional API?**
+My answer: ✅ Complex branching, shared mutable state, human-in-the-loop.
 
 ---
 
 ## L8: Persistence & Checkpointers
 
 ### Problem: Graphs are stateless by default — each invoke() is a fresh run.
+
+### ⚠️ Don't confuse with L3's `add_messages` reducer:
+```
+Reducer (L3)      = state survives across NODES within one run
+Checkpointer (L8) = state survives across RUNS (between user turns)
+
+Without checkpointer: classify→generate works (reducer connects nodes)
+                      but second invoke() has NO memory of the first one
+```
 
 ### Solution: Compile with checkpointer + pass thread_id:
 ```python
@@ -389,10 +444,54 @@ SqliteSaver    — local file (single-server apps)
 PostgresSaver  — database (production, multi-server)
 ```
 
+### Example — WITHOUT checkpointer (my project-1 right now):
+```python
+agent = graph.compile()  # no checkpointer
+
+# Turn 1:
+agent.invoke({"messages": [HumanMessage("What's your refund policy?")]})
+# → "Our refund policy is 30 days for most items..."
+
+# Turn 2:
+agent.invoke({"messages": [HumanMessage("And for international orders?")]})
+# → "I'm not sure what you're referring to. Could you clarify?"
+#    ❌ No idea what "and" refers to — state was wiped between calls
+```
+
+### Example — WITH checkpointer:
+```python
+from langgraph.checkpoint.memory import MemorySaver
+
+agent = graph.compile(checkpointer=MemorySaver())
+config = {"configurable": {"thread_id": "aman-session-1"}}
+
+# Turn 1:
+agent.invoke({"messages": [HumanMessage("What's your refund policy?")]}, config)
+# → "Our refund policy is 30 days for most items..."
+#    💾 checkpointer saves: [HumanMessage, AIMessage] under "aman-session-1"
+
+# Turn 2 (same thread_id):
+agent.invoke({"messages": [HumanMessage("And for international orders?")]}, config)
+# → "For international orders, the refund window is 45 days..."
+#    ✅ Checkpointer loaded Turn 1's messages, appended Turn 2's question
+#    LLM sees FULL history: [Human("refund policy?"), AI("30 days..."), Human("international?")]
+
+# Turn 3 (DIFFERENT thread_id = fresh conversation):
+new_config = {"configurable": {"thread_id": "different-session"}}
+agent.invoke({"messages": [HumanMessage("And for international orders?")]}, new_config)
+# → "I'm not sure what you're referring to."
+#    ❌ Different thread = no shared history
+```
+
 ### Quiz Q&A:
-**Q1: When does checkpointer save?** After every node execution.
-**Q2: Compile with checkpointer but forget thread_id?** Raises error — can't look up or store.
-**Q3: MemorySaver forgets after restart?** Switch to SqliteSaver or PostgresSaver (persist to disk/DB).
+**Q1: When does the checkpointer save state?**
+My answer: ✅ After every node execution — not once at the end.
+
+**Q2: You compile with checkpointer but forget to pass thread_id in config. What happens?**
+My answer: ✅ Raises error — checkpointer can't look up or store without a thread_id.
+
+**Q3: Agent forgets everything after server restart. Using MemorySaver. Fix?**
+My answer: ✅ Switch to SqliteSaver or PostgresSaver — persist to disk/DB instead of RAM.
 
 ---
 
@@ -443,9 +542,14 @@ astream_events() = SSE / Server-Sent Events (every tiny update)
 ```
 
 ### Quiz Q&A:
-**Q1: stream() vs astream_events()?** stream = node-level events. astream_events = async token-by-token.
-**Q2: stream_mode="values" vs "updates"?** values = full state after each node. updates = only what changed.
-**Q3: Typing effect in chatbot UI?** astream_events().
+**Q1: What's the difference between `stream()` and `astream_events()`?**
+My answer: ✅ `stream()` = node-level events (one per node completion). `astream_events()` = async token-by-token (every tiny update).
+
+**Q2: `stream_mode="values"` vs `"updates"` — what's the difference?**
+My answer: ✅ `values` = full state after each node. `updates` = only what that node changed.
+
+**Q3: You want a typing effect in your chatbot UI. Which method?**
+My answer: ✅ `astream_events()` — gives token-by-token streaming.
 
 ---
 
@@ -497,9 +601,16 @@ final = interrupt(f"Draft: {draft}\nEdit or approve:") # human edits draft
 ```
 
 ### Quiz Q&A:
-**Q1: What does interrupt() do?** Pauses graph, checkpoints state, returns interrupt value to app.
-**Q2: Why requires checkpointer?** State must be saved (survives between invokes), pause point recorded, state loaded on resume.
-**Q3: How to resume?** `agent.invoke(Command(resume="yes"), config)` with SAME thread_id. NOT a new HumanMessage.
+**Q1: What does `interrupt()` do when called inside a node?**
+My answer: ✅ Pauses graph execution, checkpoints state, returns interrupt value to the application.
+
+**Q2: Why does interrupt require a checkpointer?**
+My answer: ✅ State must be saved (survives between invokes), pause point recorded, state loaded on resume.
+
+**Q3: How do you resume after an interrupt?**
+⚠️ This was missed 3 TIMES across quizzes and exam.
+My answer (first attempts): ❌ `agent.invoke({"messages": [HumanMessage("yes")]}, config)` — WRONG, that's a new message.
+✅ Correct: `agent.invoke(Command(resume="yes"), config)` with SAME thread_id. NOT a new HumanMessage.
 
 ---
 
@@ -552,9 +663,14 @@ update_state()      = git commit --amend
 ```
 
 ### Quiz Q&A:
-**Q1: get_state() vs get_state_history()?** Latest state vs all checkpoints in order.
-**Q2: Fix P0 → P2 without re-running?** `agent.update_state(config, {"priority": "P2"})` then resume.
-**Q3: Why checkpointer needed?** Can't travel to states that were never saved.
+**Q1: What's the difference between `get_state()` and `get_state_history()`?**
+My answer: ✅ `get_state()` = latest state (like `git show HEAD`). `get_state_history()` = all checkpoints in order (like `git log`).
+
+**Q2: Agent classified ticket as P0 but it should be P2. How to fix without re-running the whole graph?**
+My answer: ✅ `agent.update_state(config, {"priority": "P2"})` then `agent.invoke(None, config)` to continue.
+
+**Q3: Why is a checkpointer required for time travel?**
+My answer: ✅ Can't travel to states that were never saved. No checkpointer = no snapshots.
 
 ---
 
@@ -606,9 +722,14 @@ Retry policies → handle TRANSIENT ERRORS (retry within the same run, no restar
 - Server crashes mid-graph → checkpointer resumes from last good state
 
 ### Quiz Q&A:
-**Q1: Checkpointers vs retry policies?** Checkpointers = server crashes (durability). Retries = transient errors (within same run).
-**Q2: Retry on credit card charge node?** No — side effect, might double-charge.
-**Q3: RetryPolicy(max_attempts=3, initial_interval=1, backoff_factor=2) wait times?** 1s, then 2s.
+**Q1: What's the difference between checkpointers and retry policies?**
+My answer: ✅ Checkpointers = server crashes (durability, resume from last saved state). Retry policies = transient errors (retry within same run, no restart).
+
+**Q2: Should you add retry_policy to a credit card charge node?**
+My answer: ✅ No — side effect node, might double-charge the customer.
+
+**Q3: `RetryPolicy(max_attempts=3, initial_interval=1, backoff_factor=2)` — what are the wait times?**
+My answer: ✅ 1s after first failure, then 2s (1 × 2) after second. Third failure raises error.
 
 ---
 
@@ -652,9 +773,14 @@ Graph     = full workflow (application = modules wired together)
 ### JS Analogy: Extracting functions into modules. When a file gets too big, you split it.
 
 ### Quiz Q&A:
-**Q1: How to add subgraph?** `parent_graph.add_node("name", compiled_subgraph)` — pass compiled graph to add_node.
-**Q2: 15 nodes (5 refund, 5 return, 5 general) — use subgraphs?** Yes, 3 reusable subgraphs.
-**Q3: Different state schema?** Yes, subgraph can have own state or share parent's state.
+**Q1: How do you add a subgraph to a parent graph?**
+My answer: ✅ `parent_graph.add_node("name", compiled_subgraph)` — pass the compiled graph to `add_node`, it acts as a single node.
+
+**Q2: You have 15 nodes (5 refund, 5 return, 5 general). Should you use subgraphs?**
+My answer: ✅ Yes — 3 reusable subgraphs, each handling one workflow. Easier to test, maintain, and reuse.
+
+**Q3: Can a subgraph have a different state schema from the parent?**
+My answer: ✅ Yes — subgraph can have its own TypedDict or share the parent's. LangGraph maps overlapping keys automatically.
 
 ---
 
@@ -662,21 +788,47 @@ Graph     = full workflow (application = modules wired together)
 
 ### Initial Attempt: 64% (9/14) — FAIL
 
-### Mistakes Made:
-- **A2**: Said "carries memory" — should be: `Annotated` = APPEND (reducer), plain `list` = REPLACE
-- **A3**: Said "returns results of func" — should be: receives FULL state, returns PARTIAL state
-- **B2**: Used `else if` (JS) instead of `elif` (Python), typos (`retrun`)
-- **B3**: Used `HumanMessage("Yes")` instead of `Command(resume="yes")` — 3rd time making this error
+### Section A (Concept Questions):
+
+**A1: What are the 3 components of a LangGraph graph?**
+My answer: ✅ State, Nodes, Edges.
+
+**A2: What's the difference between `messages: list` and `messages: Annotated[list, add_messages]`?**
+⚠️ My answer (1st attempt): ❌ Said "carries memory" — vague and wrong.
+✅ Correct: Plain `list` = each node REPLACES the list. `Annotated[list, add_messages]` = APPEND reducer, new messages are added to existing list.
+✅ Retry: Got it right — replace vs append.
+
+**A3: What does a node receive and what does it return?**
+⚠️ My answer (1st attempt): ❌ Said "returns results of func" — wrong framing.
+✅ Correct: Receives FULL state (all keys). Returns PARTIAL state (only changed keys).
+✅ Retry: Got it right — full state in, partial state out.
+
+**A4: What's the difference between a checkpointer and a retry policy?**
+My answer: ✅ Checkpointers = server crash recovery (durability, resume from last saved state). Retry policies = transient error retry (within same run, no restart).
+
+**A5: When does the checkpointer save state?**
+My answer: ✅ After every node execution — not once at the end.
+
+### Section B (Code/Scenario Questions):
+
+**B1: Write a routing function that routes based on priority.**
+My answer: ✅ Correct routing function.
+
+**B2: Write a conditional edge with `elif` for 3 intents.**
+⚠️ My answer (1st attempt): ❌ Used `else if` (JavaScript syntax) instead of `elif` (Python). Also had typos (`retrun`).
+✅ Retry: Fixed syntax — `elif`, `return`.
+
+**B3: Agent hits `interrupt("Approve deletion?")`. Write the code to resume with user's approval.**
+⚠️ My answer (1st attempt): ❌ `agent.invoke({"messages": [HumanMessage("Yes")]}, config)` — WRONG. That's a new message, not a resume. **3rd time making this mistake.**
+⚠️ My answer (retry): 🔄 `graph.invoke(Command(resume="approved"), config)` — Fixed the Command part ✅ but used `graph.invoke` instead of `agent.invoke` ❌.
+✅ Correct: `agent.invoke(Command(resume="approved"), config)` — compiled graph (`agent`), not builder (`graph`).
 
 ### Retry: 86% (12/14) — PASS
-- Fixed A2: replace vs append — correct
-- Fixed A3: full state in, partial state out — correct
-- Fixed B3: `Command(resume="approved")` with import — correct (but used `graph.invoke` instead of `agent.invoke`)
 
 ### Key Takeaways for Revision:
 1. **`elif`** not `else if` (Python ≠ JavaScript)
 2. **`agent.invoke()`** (compiled) not `graph.invoke()` (builder) — ALWAYS
-3. **`Command(resume=value)`** to resume after interrupt — NOT a new HumanMessage
+3. **`Command(resume=value)`** to resume after interrupt — NOT a new HumanMessage — **missed 3 TIMES**
 4. **Annotated[list, add_messages]** = APPEND reducer. Plain list = REPLACE.
 5. Node receives **FULL state**, returns **PARTIAL state** (only changed keys)
 6. **Checkpointers** = server crash recovery. **Retry policies** = transient error retry.
