@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -54,7 +55,7 @@ const TogglePanelButton = ({ label, open, controlsId, onClick }) => (
     onClick={onClick}
     aria-expanded={open}
     aria-controls={controlsId}
-    className='flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm text-neutral-300 hover:bg-neutral-800 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400'
+    className='flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm text-neutral-300 hover:bg-neutral-800 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
   >
     <ChevronIcon open={open} />
     <span>{label}</span>
@@ -71,6 +72,8 @@ const markdownComponents = {
   },
 };
 
+const fileIdFromPath = (path) => path.split("/").pop().replace(/\.md$/, "");
+
 const CategoryList = ({ activeCategory, onSelect }) => (
   <nav aria-label='Study categories'>
     <ul>
@@ -79,7 +82,7 @@ const CategoryList = ({ activeCategory, onSelect }) => (
           <button
             onClick={() => onSelect(c.category)}
             aria-current={c.category === activeCategory ? "true" : undefined}
-            className={`flex items-center gap-2 w-[calc(100%-1rem)] mx-2 mb-1 text-left px-3 py-2.5 text-sm rounded-md transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400 ${
+            className={`flex items-center gap-2 w-[calc(100%-1rem)] mx-2 mb-1 text-left px-3 py-2.5 text-sm rounded-md transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
               c.category === activeCategory
                 ? "bg-teal-500/15 text-teal-300 font-medium"
                 : "text-neutral-300 hover:bg-neutral-800 hover:text-white"
@@ -102,7 +105,7 @@ const FileList = ({ files, activeFile, onSelect }) => (
           <button
             onClick={() => onSelect(file)}
             aria-current={file.path === activeFile?.path ? "true" : undefined}
-            className={`block w-[calc(100%-1rem)] mx-2 mb-1 text-left px-3 py-2.5 text-sm rounded-md transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400 ${
+            className={`block w-[calc(100%-1rem)] mx-2 mb-1 text-left px-3 py-2.5 text-sm rounded-md transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
               file.path === activeFile?.path
                 ? "bg-neutral-800 text-white font-medium"
                 : "text-neutral-400 hover:bg-neutral-800 hover:text-neutral-100"
@@ -121,22 +124,76 @@ const FileList = ({ files, activeFile, onSelect }) => (
 
 const StudyPage = () => {
   const isMobile = useIsMobile();
-  const [activeCategory, setActiveCategory] = useState(categories[0]?.category ?? null);
-  const [activeFile, setActiveFile] = useState(categories[0]?.files[0] ?? null);
+  const params = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const categoriesWithIds = useMemo(
+    () =>
+      categories.map((c) => ({
+        ...c,
+        files: c.files.map((f) => ({ ...f, id: fileIdFromPath(f.path) })),
+      })),
+    []
+  );
+
+  const getInitialCategory = () => {
+    if (params.category) {
+      try {
+        const decoded = decodeURIComponent(params.category);
+        return categoriesWithIds.find((c) => c.category === decoded)
+          ? decoded
+          : categoriesWithIds[0]?.category ?? null;
+      } catch (e) {
+        return categoriesWithIds[0]?.category ?? null;
+      }
+    }
+    return categoriesWithIds[0]?.category ?? null;
+  };
+
+  const getInitialFile = () => {
+    const initialCat = getInitialCategory();
+    const files = categoriesWithIds.find((c) => c.category === initialCat)?.files ?? [];
+    if (params.fileId) {
+      try {
+        const decodedFileId = decodeURIComponent(params.fileId);
+        return files.find((f) => f.id === decodedFileId) ?? files[0] ?? null;
+      } catch (e) {
+        return files[0] ?? null;
+      }
+    }
+    return files[0] ?? null;
+  };
+
+  const [activeCategory, setActiveCategory] = useState(getInitialCategory);
+  const [activeFile, setActiveFile] = useState(getInitialFile);
   const [categoriesOpen, setCategoriesOpen] = useState(true);
   const [filesOpen, setFilesOpen] = useState(true);
 
   const filesInCategory =
-    categories.find((c) => c.category === activeCategory)?.files ?? [];
+    categoriesWithIds.find((c) => c.category === activeCategory)?.files ?? [];
 
   const readingMinutes = useMemo(
     () => (activeFile ? estimateReadingMinutes(activeFile.content) : 0),
     [activeFile]
   );
 
+  // keep the URL in sync when user changes selection
+  useEffect(() => {
+    if (!activeCategory) return;
+    const encodedCategory = encodeURIComponent(activeCategory);
+    const encodedFileId = activeFile?.id ? `/${encodeURIComponent(activeFile.id)}` : "";
+    const target = `/prep/${encodedCategory}${encodedFileId}`;
+    if (location.pathname !== target) {
+      // replace on initial load, push on subsequent changes
+      navigate(target, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCategory, activeFile]);
+
   const selectCategory = (category) => {
     setActiveCategory(category);
-    const firstFile = categories.find((c) => c.category === category)?.files[0] ?? null;
+    const firstFile = categoriesWithIds.find((c) => c.category === category)?.files[0] ?? null;
     setActiveFile(firstFile);
     if (isMobile) setCategoriesOpen(false);
   };
@@ -198,7 +255,7 @@ const StudyPage = () => {
           </ReactMarkdown>
         ) : (
           <p className='text-neutral-400'>
-            No notes yet — add .md files under src/study/&lt;Category&gt;/.
+            No notes yet — add .md files under src/study/&lt;Category&gt;.
           </p>
         )}
       </div>
