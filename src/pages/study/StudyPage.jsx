@@ -191,6 +191,16 @@ const StudyPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCategory, activeFile]);
 
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = activeFile
+      ? `${activeFile.title} · ${activeCategory} | Study Notes`
+      : "Study Notes | Aman";
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [activeFile, activeCategory]);
+
   const selectCategory = (category) => {
     setActiveCategory(category);
     const firstFile = categoriesWithIds.find((c) => c.category === category)?.files[0] ?? null;
