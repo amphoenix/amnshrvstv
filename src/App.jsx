@@ -29,6 +29,8 @@ const App = () => {
           }
         />
         <Route path='/prep' element={<StudyPage />} />
+        <Route path='/prep/:category' element={<StudyPage />} />
+        <Route path='/prep/:category/:fileId' element={<StudyPage />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
